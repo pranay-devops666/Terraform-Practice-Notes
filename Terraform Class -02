@@ -593,3 +593,125 @@ Note: You didn't use the -out option to save this plan, so Terraform can't guara
 [root@TERRAFORM pranay]# 
 
 
+vim main.tf
+resource "aws_instance" "devops" {
+
+  tags = {
+    Name        = var.iname
+    Environment = var.ienv
+  }
+
+  ami           = var.ami_id
+  instance_type = var.itype ? "t3.micro" "c7i-flex.large"
+  key_name      = var.ikey
+  count         = var.icount
+  root_block_device {
+    volume_size = var.ivolume
+  }
+}
+
+:wq
+
+
+
+
+vim main.tf
+
+cat variables.tf 
+variable "iname" {
+  description = "this is my instance name"
+  type        = string
+  default     = "aim-for-complex"
+}
+
+variable "ienv" {
+  description = "this is my environment name"
+  default     = "Prod"
+}
+
+variable "ami_id" {
+[root@TERRAFORM pranay]# terraform fmt
+[root@TERRAFORM pranay]# cat variables.tf 
+variables "iname" {
+  description = "this is my instance name"
+  type        = string
+  default     = "aim-for-complex"
+}
+
+variable "ienv" {
+  description = "this is my environment name"
+  default     = "Prod"
+}
+
+variable "ami_id" {
+  description = "this is my iam id"
+  default     = "ami-0c3389a4fa5bddaad"
+}
+
+variable "itype" {
+  description = "this is my instance type"
+  type        = bool
+  default     = true
+
+variable "ikey" {
+  description = "this is my keypair"
+  type        = string
+  default     = "Anjeneyakeypair"
+}
+
+variable "icount" {
+  description = "this is my instance count"
+  type        = number
+  default     = 1
+}
+
+variable "ivolume" {
+  description = "this is my volume"
+  type        = number
+  default     = 10
+}
+
+:wq
+
+
+
+vim main.tf
+
+resources "aws_instance" "my-server" {
+tags = {
+Name = var.iname[count.index]
+}
+
+ami = "ami-0c3389a4fa5bddaad"
+instance_type = var.itype[count.index]
+key_name = "Anjeneyakeypair"
+count = 2
+}
+
+variable "iname" {
+type = list(string)
+default = ["server-1", "server-2"]
+}
+
+variable "itype" {
+type = list(string)
+default = ["t3.micro", "c7i-flex.large"]
+}
+
+:wq
+
+
+
+terraform destroy --auto-approve --target=aws_instance.myserver[0] ---------------------------------------------->
+
+
+
+
+vim outputs.tf
+
+output "ips" {
+value = [aws_instance.myserver[0].public_ip, aws_instance.myserver[1].private_ip]
+}
+
+:wq
+
