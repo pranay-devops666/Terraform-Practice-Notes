@@ -848,7 +848,7 @@ resource "aws_instance" "devops" {
     provider = "aws.usa"
   }
 
-  ami                    = "ami-01b14b7ad41e17ba4"
+  ami                    = "ami-id-in-usa"
   instance_type          = "t3.micro"
   key_name               = "Anjeneyakeypair"
   availability_zone      = "us-east-1a"
@@ -864,7 +864,7 @@ resource "aws_instance" "devops" {
   }
   provider = "aws.mumbai"
 
-  ami                    = "ami-045443a70fafb8bbc"
+  ami                    = "ami-id-mumbai"
   instance_type          = "t3.micro"
   availability_zone      = "ap-south-1a"
   root_block_device {
@@ -877,37 +877,3 @@ resource "aws_instance" "devops" {
 
 
 
-
-
-resource "aws_instance" "devops_usa" {
-  provider = aws.usa
-
-  tags = {
-    Name = "NV-Instance"
-  }
-
-  ami               = "ami-01b14b7ad41e17ba4"
-  instance_type     = "t3.micro"
-  key_name          = "Anjeneyakeypair"
-  availability_zone = "us-east-1a"
-
-  root_block_device {
-    volume_size = 10
-  }
-}
-
-resource "aws_instance" "devops_mumbai" {
-  provider = aws.mumbai
-
-  tags = {
-    Name = "Mumbai-Instance"
-  }
-
-  ami               = "ami-045443a70fafb8bbc"
-  instance_type     = "t3.micro"
-  availability_zone = "ap-south-1a"
-
-  root_block_device {
-    volume_size = 10
-  }
-}
