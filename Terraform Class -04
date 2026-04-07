@@ -631,7 +631,19 @@ resource "aws_instance" "myinstance" {
 }
 [root@TERRAFORM ~]# terraform apply -local=false ----------------------->
 
+[root@TERRAFORM ~]# terraform apply -lock=false ----------------------->
 
+
+TOPICS we learned in this class 
+
+WORKSPACE
+LOCALS
+TAINT
+REPLACE
+LIFECYCLE(meta arguments)
+
+
+Another topics is 
 
 
 
