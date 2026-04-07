@@ -845,9 +845,8 @@ provider "aws" {
 resource "aws_instance" "devops" {
   tags = {
     Name = "NV-Instance"
-    provider = "aws.usa"
   }
-
+  provider = "aws.usa"
   ami                    = "ami-id-in-usa"
   instance_type          = "t3.micro"
   key_name               = "Anjeneyakeypair"
@@ -863,7 +862,6 @@ resource "aws_instance" "devops" {
     Name = "Mumbai-Instance"
   }
   provider = "aws.mumbai"
-
   ami                    = "ami-id-mumbai"
   instance_type          = "t3.micro"
   availability_zone      = "ap-south-1a"
@@ -872,6 +870,73 @@ resource "aws_instance" "devops" {
   }
 }
 [root@TERRAFORM ~]# 
+
+
+[root@TERRAFORM ~]# terraform init
+[root@TERRAFORM ~]# terraform plan 
+[root@TERRAFORM ~]# terraform apply
+
+as per the latest update we will do some changes here
+
+
+vim main.tf
+
+provider "aws" {
+  region = "us-east-1"
+  alias = "usa"
+}
+
+provider "aws" {
+  region = "ap-south-1"
+  alias = "mumbai"
+}
+
+
+resource "aws_instance" "devops" {
+  tags = {
+    Name = "NV-Instance"
+  }
+  provider = aws.usa
+  ami                    = "ami-id-in-usa"
+  instance_type          = "t3.micro"
+  key_name               = "Anjeneyakeypair"
+  availability_zone      = "us-east-1a"
+  root_block_device {
+    volume_size = 10
+  }
+}
+
+
+resource "aws_instance" "cloudaws" {
+  tags = {
+    Name = Mumbai-Instance
+  }
+  provider = "aws.mumbai"
+  ami                    = "ami-id-mumbai"
+  instance_type          = "t3.micro"
+  availability_zone      = "ap-south-1a"
+  root_block_device {
+    volume_size = 10
+  }
+}
+
+
+:wq 
+
+this will get executed 
+
+
+[root@TERRAFORM ~]# terraform init
+[root@TERRAFORM ~]# terraform plan 
+[root@TERRAFORM ~]# terraform apply --auto-approve
+
+[root@TERRAFORM ~]# terraform state list
+
+[root@TERRAFORM ~]# terraform destroy --auto-approve
+
+
+
+Next Topic: PROVIDERS in next class
 
 
 
