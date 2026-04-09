@@ -2,3 +2,32 @@ Terraform Class -05
 
 TOPIC: TERRAFORM REFRESH, PROVISIONERS
 ========================================
+
+
+
+Lunch one instance --------------> name: terraform-----------> with keypair-------> securiy group--------> 10gb ebs volume ----------> launch and connect 
+
+Now we need to install Terraform in it
+
+go to this website -------> https://developer.hashicorp.com/terraform/install--------> select Linux ---------> select Amazon Linux------>copy all commands and paste here 
+
+go to this website to install locally on laptop ----------------------> https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli
+
+[root@TERRAFORM ~]# sudo yum install -y yum-utils shadow-utils 
+sudo yum-config-manager --add-repo https://rpm.releases.hashicorp.com/AmazonLinux/hashicorp.repo
+sudo yum install terraform
+
+[root@TERRAFORM ~]# terraform version ---------------------->
+Terraform v1.14.8
+on linux_amd64
+[root@TERRAFORM ~]# 
+[root@TERRAFORM ~]# terraform version
+Terraform v1.14.8
+on linux_amd64
+[root@TERRAFORM ~]# 
+
+
+
+
+
+lets write the code here 
