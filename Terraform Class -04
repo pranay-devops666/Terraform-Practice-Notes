@@ -646,6 +646,89 @@ LIFECYCLE(meta arguments)
 Another topics is terraform IMPORT
 
 
+go to aws Dashboard ---------------> launch instance -----------> with key pair-----------> with security group -----------> ebs volume 8gb ------> launch and
+connect instance
+
+terraform state list 
+
+Here using Import concept
+============================
+
+we are doing Import old ec2-instnace into a newly created ec2-instance
+
+vim resource.tf
+
+cat resource.tf 
+
+resource "aws_instance" "myinstance" {
+  tags = {
+    Name = "Manual-Instance"
+  }
+  ami               = "ami-01b14b7ad41e17ba4"
+  instance_type     = "t3.micro"
+}
+}
+
+:wq
+
+
+terraform import aws_instance.myinstance instanceipaddress of new one ----------------------->
+
+
+
+getting error do one thing do delete exsisting  manifets files of terraform
+
+ll
+rm -rf terraform.tfstate* -------------------->
+
+terraform state list -------------------->
+
+
+
+terraform import aws_instance.myinstance instanceipaddress of new one ----------------------->
+
+
+terraform state list -------------------->
+
+
+vim resource.tf
+
+cat resource.tf 
+
+resource "aws_instance" "myinstance" {
+  tags = {
+    Name = "Automation-Instance"
+  }
+  ami               = "ami-01b14b7ad41e17ba4"
+  instance_type     = "t3.micro"
+}
+}
+
+:wq
+
+
+
+terraform apply --auto-approve ----------------->
+
+
+What is Terraformer:
+==========================
+* its a free open-source tool
+* it is used for infrastructure management
+* it allows you to import existing infrastructure from a cloud
+* it can generate any resource code in less than a second
+* its written on GO Language
+
+
+
+TERRAFORMER COMMANDS 
+=======================
+
+* terraform import aws --resources=sg,ec2_instance,elb --regions=us-east-1
+* cd generated
+* cd ec2
+* terraform state list
+
 
 
 
