@@ -1,10 +1,58 @@
 Terraform Class -01
+=======================
+
+BASICS OF TERRAFORM 
+======================
+
+Learning Terraform
+
+TERRAFORM INIT
+---------------
+
+Connect your code ti Terraform providers like AWS and downloads whats's needed to start
+
+TERRAFORM PLAN
+-----------------
+
+Compares your code with existing infra and shows what will be created, changed, or deleted
+
+TERRAFORM APPLY
+-----------------
+
+Takes that plan and actually creates or update the infrastructure
+
+TERRAFORM OUTPUT
+-----------------
+
+Fetch important values like IP, URL after your resources are created
+
+TERRAFORM VALIDATE
+-----------------
+
+Checks if your Terraform code is valid before you run anything
+
+TERRAFORM FMT
+-----------------
+
+Formats your code automatically so it's redable and consistent
+
+TERRAFORM STATE LIST
+-----------------
+
+Shows what resources Terraform is managing behind the scenes
+
+TERRAFORM DESTROY
+-----------------
+
+Deletes all resources Terraform created so you don't keep paying for them
+
+
 
 TOPIC: TERRAFORM INTRODUCTION, CREATING AN EC2 INSTANCE USING TERRAFORM
 ================================================================================
 
-TERRAFORM -----------> Means IAAC(Infrastructure As A Code) -------> we can create different ways to create the Infrastructure------------> we can create as Manual way,
-through CLI(Command Line Interface) & Automation
+TERRAFORM -----------> Means IAAC(Infrastructure As A Code) -------> we can create different ways to create the Infrastructure------------> we can create as 
+Manual way, through CLI(Command Line Interface) & Automation
 
 
 there is a reusability is present 
@@ -41,7 +89,8 @@ lets write the code here
 
 before going to write we will know the sections present in terraform 
 
-sections present in terraform is 3 sections 1. Provider section 2. Resource section 3. Variable section
+sections present in terraform is 3 sections 1. Provider section (cloud region) 2. Resource section (EC2S3/VPC ami name instance type ebs key-pair)
+3. Variable section (storing the variables)
 
 [root@TERRAFORM ~]# mkdir pranay ---------------------->
 [root@TERRAFORM ~]# cd pranay/ ---------------------->
@@ -82,7 +131,7 @@ dr-xr-x---. 5 root root 174 Mar 30 08:43 ..
 -rw-r--r--. 1 root root  40 Mar 30 08:31 provider.tf
 -rw-r--r--. 1 root root 228 Mar 30 08:43 resource.tf
 [root@TERRAFORM pranay]# 
-[root@TERRAFORM pranay]# terraform init
+[root@TERRAFORM pranay]# terraform init ------------------------------------->
 Initializing the backend...
 Initializing provider plugins...
 - Finding latest version of hashicorp/aws...
@@ -443,5 +492,10 @@ count = 2
 }
 
 :wq
+
+
+
+
+
 
 
