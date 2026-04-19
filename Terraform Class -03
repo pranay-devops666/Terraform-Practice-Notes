@@ -754,6 +754,105 @@ first we need 2 ec2-instance, one ec2-instance will be present in North-varginia
 one region will be North-varginia and another will be Mumbai
 we need 2 provider sections here, 2 resources 
 
+TASK TO DO STEP BY STEP
+=============================
+
+Got it 👍 — this is a classic multi-region Terraform task. I’ll guide you in a very simple, step-by-step way so you can do it confidently.
+
+We will create:
+
+1 EC2 in US East (N. Virginia)
+1 EC2 in Mumbai
+✅ STEP 1: Create project folder
+mkdir terraform-multi-region
+cd terraform-multi-region
+
+✅ STEP 2: Create Terraform file
+
+vi main.tf
+
+✅ STEP 3: Add complete Terraform code
+
+provider "aws" {
+  alias  = "virginia"
+  region = "us-east-1"
+}
+
+provider "aws" {
+  alias  = "mumbai"
+  region = "ap-south-1"
+}
+
+# EC2 in Virginia
+resource "aws_instance" "virginia_instance" {
+  provider = aws.virginia
+
+  ami           = "ami-0c02fb55956c7d316" # Amazon Linux (Virginia)
+  instance_type = "t2.micro"
+
+  tags = {
+    Name = "Virginia-Instance"
+  }
+}
+
+# EC2 in Mumbai
+resource "aws_instance" "mumbai_instance" {
+  provider = aws.mumbai
+
+  ami           = "ami-03f4878755434977f" # Amazon Linux (Mumbai)
+  instance_type = "t2.micro"
+
+  tags = {
+    Name = "Mumbai-Instance"
+  }
+}
+
+✅ STEP 4: Initialize Terraform
+
+terraform init
+
+✅ STEP 5: Check plan
+
+terraform plan
+
+✅ STEP 6: Apply
+
+terraform apply
+
+✅ STEP 7: Verify in AWS Console
+
+Go to:
+
+EC2 → Check region N. Virginia
+Switch region → Mumbai
+
+👉 You will see 2 instances created
+
+IMPORTANT NOTES (VERY IMPORTANT)
+1. AMI is region-specific
+Each region has different AMI IDs
+If error comes → AMI might be outdated
+
+2. AWS credentials must be configured
+
+Run:
+
+aws configure
+
+Enter:
+
+Access Key
+Secret Key
+Region (any default)
+
+3. Free tier safe
+
+Use:
+
+t2.micro
+
+======================================================================================================================================================================================================================
+
 now we will do write terrafom file for this
 
 [root@TERRAFORM ~]# ll
