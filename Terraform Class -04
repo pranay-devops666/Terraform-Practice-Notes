@@ -528,7 +528,12 @@ No changes. Your infrastructure matches the configuration.
 Terraform has compared your real infrastructure against your configuration and found no differences, so no changes are needed.
 [root@TERRAFORM ~]# 
 
-[root@TERRAFORM ~]# cat resource.tf 
+
+TOPIC: LIFECYCLE(meta arguments)
+======================================
+
+
+[root@TERRAFORM ~]# cat resource.tf -------------------------------------------------->
 locals {
   itype = {
     dev = "t3.micro"
@@ -557,10 +562,10 @@ resource "aws_instance" "myinstance" {
 }
 [root@TERRAFORM ~]# 
 
-[root@TERRAFORM ~]# terraform state list
+[root@TERRAFORM ~]# terraform state list -------------------------------------------------->
 aws_instance.myinstance[0]
 aws_instance.myinstance[1]
-[root@TERRAFORM ~]# terraform apply --auto-approve -replace=aws_instance.myinstance[0]
+[root@TERRAFORM ~]# terraform apply --auto-approve -replace=aws_instance.myinstance[0] -------------------------------------------------->
 aws_instance.myinstance[1]: Refreshing state... [id=i-07acb6438535ba361]
 aws_instance.myinstance[0]: Refreshing state... [id=i-0534ba059725cad97]
 
@@ -583,7 +588,7 @@ aws_instance.myinstance[0]: Destruction complete after 30s
 Apply complete! Resources: 1 added, 0 changed, 1 destroyed.
 [root@TERRAFORM ~]# 
 
-[root@TERRAFORM ~]# terraform destroy
+[root@TERRAFORM ~]# terraform destroy -------------------------------------------------->
 
 Plan: 0 to add, 0 to change, 2 to destroy.
 
@@ -592,15 +597,15 @@ Do you really want to destroy all resources in workspace "dev"?
   There is no undo. Only 'yes' will be accepted to confirm.
 
   Enter a value: no
-
+Destroy cancelled.
 
 
 NOTE:
 
-[root@TERRAFORM ~]# terraform destroy -local=false
+[root@TERRAFORM ~]# terraform destroy -lock=false -------------------------------------------------->
 
-[root@TERRAFORM ~]# vim resource.tf 
-[root@TERRAFORM ~]# cat resource.tf 
+[root@TERRAFORM ~]# vim resource.tf  -------------------------------------------------->
+[root@TERRAFORM ~]# cat resource.tf -------------------------------------------------->
 locals {
   itype = {
     dev  = "t3.micro"
@@ -631,16 +636,41 @@ resource "aws_instance" "myinstance" {
 }
 [root@TERRAFORM ~]# terraform apply -local=false ----------------------->
 
-[root@TERRAFORM ~]# terraform apply -lock=false ----------------------->
-
+Plan: 0 to add, 0 to change, 2 to destroy.
+╷
+│ Error: Instance cannot be destroyed
+│ 
+│   on resource.tf line 9:
+│    9: resource "aws_instance" "myinstance" {
+│ 
+│ Resource aws_instance.myinstance[0] has lifecycle.prevent_destroy set, but the plan calls for this resource to be destroyed. To avoid this error and continue with
+│ the plan, either disable lifecycle.prevent_destroy or reduce the scope of the plan using the -target option.
+╵
+╷
+│ Error: Instance cannot be destroyed
+│ 
+│   on resource.tf line 9:
+│    9: resource "aws_instance" "myinstance" {
+│ 
+│ Resource aws_instance.myinstance[1] has lifecycle.prevent_destroy set, but the plan calls for this resource to be destroyed. To avoid this error and continue with
+│ the plan, either disable lifecycle.prevent_destroy or reduce the scope of the plan using the -target option.
+╵
+[root@TERRAFORM ~]# 
 
 TOPICS we learned in this class 
 
-WORKSPACE
-LOCALS
-TAINT
-REPLACE
-LIFECYCLE(meta arguments)
+WORKSPACE ---------------> used to create different environments like dev, test & prod
+LOCALS ---------------> used to create set server-names & type of instances need to be created in different environments like dev, test & prod
+TAINT ---------------> used to recreate servers for which server is not working properly in a particular environment for suppose in one particular environment 
+having some servers but one server is not working properly means we will do use TAINT to recreate the not working server 
+REPLACE ---------------> used to replace the deleted server by using the command as terraform apply --auto-approve -replace=aws_instance.myinstance[0]
+LIFECYCLE(meta arguments) ---------------> used to protect servers should done any changes from anyone for example someone gave terraform destroy any anything
+changes done means we will use  LIFECYCLE(meta arguments) to protect
+
+create_before_destroy = true -----------> this line will use cases new resource should be create after old one should be get delete
+    prevent_destroy = true -----------> this line will use cases should not get deleted by anyone completely need to be protect the instance
+    ignore_changes = [tags] -----------> this line will use cases if anyone trying to done changes should not get change from someone 
+
 
 
 Another topics is terraform IMPORT
@@ -672,10 +702,23 @@ resource "aws_instance" "myinstance" {
 :wq
 
 
-terraform import aws_instance.myinstance instanceipaddress of new one ----------------------->
+[root@TERRAFORM ~]# taerraform import aws_instance.myinstance i-04e7248c0cb080811
+-bash: taerraform: command not found
+[root@TERRAFORM ~]# terraform import aws_instance.myinstance i-04e7248c0cb080811
+aws_instance.myinstance: Importing from ID "i-04e7248c0cb080811"...
+aws_instance.myinstance: Import prepared!
+  Prepared aws_instance for import
+aws_instance.myinstance: Refreshing state... [id=i-04e7248c0cb080811]
+
+Import successful!
+
+The resources that were imported are shown above. These resources are now in
+your Terraform state and will henceforth be managed by Terraform.
+
+[root@TERRAFORM ~]# 
 
 
-
+if got error means 
 getting error do one thing do delete exsisting  manifets files of terraform
 
 ll
@@ -690,7 +733,20 @@ terraform import aws_instance.myinstance instanceipaddress of new one ----------
 
 terraform state list -------------------->
 
+This below file to change the Instance name or rename the instance name
+For suppose if we have multiple instances at that cases we will use terraformer next use terraform import
 
+WHAT IS TERRAFORMER:
+==========================
+
+* Its a free and open-source tool.
+* It is used for infrastructure management
+* It allows you to import existing infrastructure from a cloud
+* It can generate any resource code in less than a second
+* Its written in GO Language
+
+This below file to change the Instance name or rename the instance name
+For suppose if we have multiple instances at that cases we will use terraformer next use terraform import
 vim resource.tf
 
 cat resource.tf 
