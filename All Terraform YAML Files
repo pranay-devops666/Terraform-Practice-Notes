@@ -1,5 +1,5 @@
 All Terraform YAML Files
-
+==============================
 
 
 vim provider.tf
@@ -73,6 +73,876 @@ count = 2
 }
 
 :wq
+
+
+
+vim provider.tf
+
+provider "aws" {
+region = "us-east-1"
+}
+
+:wq
+
+
+2.
+===
+
+Terrafrom Code to create Volume & increase ec2-instances count using variables
+====================================================================================
+
+vim main.tf
+
+resource "aws_instance" "my-server" {
+tags = {
+Name = "pranay"
+Environment = "Dev"
+}
+
+ami = "ami-0c3389a4fa5bddaad"
+instance_type = "t3.micro"
+key_name = "Anjeneyakeypair"
+availability_zone = "us-east-1b"
+count = 2
+root_block_device {
+volume_size = 10
+}
+}
+
+:wq
+
+
+
+
+Terrafrom Code to create Volume & increase ec2-instances count using variables
+====================================================================================
+
+vim main.tf
+
+resource "aws_instance" "devops" {
+
+tags = {
+Name = var.iname
+Environment = var.ienv
+}
+
+ami = var.ami_id
+instance_type = var.itype
+key_name = var.ikey
+count = var.icount
+root_block_device {
+volume_size = var.ivolume
+}
+}
+
+:wq
+
+
+
+Terrafrom Code to create Volume & increase ec2-instances count using variables
+====================================================================================
+vim main.tf
+resource "aws_instance" "devops" {
+
+  tags = {
+    Name        = var.iname
+    Environment = var.ienv
+  }
+
+  ami           = var.ami_id
+  instance_type = var.itype
+  key_name      = var.ikey
+  count         = var.icount
+  root_block_device {
+    volume_size = var.ivolume
+  }
+}
+
+:wq
+
+
+Terrafrom Code to create increase ec2-instances & increase ec2-instances  count using variables
+================================================================================================
+
+
+vim variables.tf 
+variables "iname" {
+  description = "this is my instance name"
+  type        = string
+  default     = "aim-for-complex"
+}
+
+variable "ienv" {
+  description = "this is my environment name"
+  default     = "Prod"
+}
+
+variable "ami_id" {
+  description = "this is my iam id"
+  default     = "ami-0c3389a4fa5bddaad"
+}
+
+variable "itype" {
+  description = "this is my instance type"
+  type        = string
+  default     = "t3.micro"
+}
+
+variable "ikey" {
+  description = "this is my keypair"
+  type        = string
+  default     = "Anjeneyakeypair"
+}
+
+variable "icount" {
+  description = "this is my instance count"
+  type        = number
+  default     = 1
+}
+
+variable "ivolume" {
+  description = "this is my volume"
+  type        = number
+  default     = 10
+}
+
+:wq
+
+
+Terrafrom Code to create Volume & increase ec2-instances count using variables
+====================================================================================
+
+
+vim main.tf
+
+cat variables.tf 
+variable "iname" {
+  description = "this is my instance name"
+  type        = string
+  default     = "aim-for-complex"
+}
+
+variable "ienv" {
+  description = "this is my environment name"
+  default     = "Prod"
+}
+
+variable "ami_id" {
+[root@TERRAFORM pranay]# terraform fmt
+[root@TERRAFORM pranay]# cat variables.tf 
+variables "iname" {
+  description = "this is my instance name"
+  type        = string
+  default     = "aim-for-complex"
+}
+
+variable "ienv" {
+  description = "this is my environment name"
+  default     = "Prod"
+}
+
+variable "ami_id" {
+  description = "this is my iam id"
+  default     = "ami-0c3389a4fa5bddaad"
+}
+
+variable "itype" {
+  description = "this is my instance type"
+  type        = string
+  default     = "t3.micro"
+}
+
+variable "ikey" {
+  description = "this is my keypair"
+  type        = string
+  default     = "Anjeneyakeypair"
+}
+
+variable "icount" {
+  description = "this is my instance count"
+  type        = number
+  default     = 1
+}
+
+variable "ivolume" {
+  description = "this is my volume"
+  type        = number
+  default     = 10
+}
+
+:wq
+
+
+
+Terrafrom Code to create Volume & increase ec2-instances count using variables
+====================================================================================
+
+
+vim variables.tf 
+variables "iname" {
+  description = "this is my instance name"
+  type        = string
+  default     = "aim-for-complex"
+}
+
+variable "ienv" {
+  description = "this is my environment name"
+  default     = "Prod"
+}
+
+variable "ami_id" {
+  description = "this is my iam id"
+  default     = "ami-0c3389a4fa5bddaad"
+}
+
+variable "itype" {
+  description = "this is my instance type"
+  type        = bool
+  default     = true
+}
+
+variable "ikey" {
+  description = "this is my keypair"
+  type        = string
+  default     = "Anjeneyakeypair"
+}
+
+variable "icount" {
+  description = "this is my instance count"
+  type        = number
+  default     = 1
+}
+
+variable "ivolume" {
+  description = "this is my volume"
+  type        = number
+  default     = 10
+}
+
+:wq
+
+
+
+
+
+
+
+
+vim main.tf
+resource "aws_instance" "devops" {
+
+  tags = {
+    Name        = var.iname
+    Environment = var.ienv
+  }
+
+  ami           = var.ami_id
+  instance_type = var.itype ? "t3.micro" "c7i-flex.large"
+  key_name      = var.ikey
+  count         = var.icount
+  root_block_device {
+    volume_size = var.ivolume
+  }
+}
+
+:wq
+
+
+
+
+vim main.tf
+
+cat variables.tf 
+variable "iname" {
+  description = "this is my instance name"
+  type        = string
+  default     = "aim-for-complex"
+}
+
+variable "ienv" {
+  description = "this is my environment name"
+  default     = "Prod"
+}
+
+variable "ami_id" {
+[root@TERRAFORM pranay]# terraform fmt
+[root@TERRAFORM pranay]# cat variables.tf 
+variables "iname" {
+  description = "this is my instance name"
+  type        = string
+  default     = "aim-for-complex"
+}
+
+variable "ienv" {
+  description = "this is my environment name"
+  default     = "Prod"
+}
+
+variable "ami_id" {
+  description = "this is my iam id"
+  default     = "ami-0c3389a4fa5bddaad"
+}
+
+variable "itype" {
+  description = "this is my instance type"
+  type        = bool
+  default     = true
+
+variable "ikey" {
+  description = "this is my keypair"
+  type        = string
+  default     = "Anjeneyakeypair"
+}
+
+variable "icount" {
+  description = "this is my instance count"
+  type        = number
+  default     = 1
+}
+
+variable "ivolume" {
+  description = "this is my volume"
+  type        = number
+  default     = 10
+}
+
+:wq
+
+
+
+vim main.tf
+
+resources "aws_instance" "my-server" {
+tags = {
+Name = var.iname[count.index]
+}
+
+ami = "ami-0c3389a4fa5bddaad"
+instance_type = var.itype[count.index]
+key_name = "Anjeneyakeypair"
+count = 2
+}
+
+variable "iname" {
+type = list(string)
+default = ["server-1", "server-2"]
+}
+
+variable "itype" {
+type = list(string)
+default = ["t3.micro", "c7i-flex.large"]
+}
+
+:wq
+
+
+
+
+vim outputs.tf
+
+output "ips" {
+value = [aws_instance.myserver[0].public_ip, aws_instance.myserver[1].private_ip]
+}
+
+:wq
+
+
+
+3. ==================
+
+
+vim provider.tf
+
+provider "aws" {
+region = "us-east-1"
+}
+
+:wq
+
+
+vim main.tf
+
+resource "aws_instance" "devops" {
+tags = {
+Name = "My-Instance"
+}
+
+ami = "ami-01b14b7ad41e17ba4"
+instance_type = "t3.micro"
+key_name = "Anjeneyakeypair"
+availability_zone = "us-east-1a"
+root_block_device {
+volume_size = 10
+}
+}
+
+:wq
+
+
+
+Terraform code to create Security Groups
+===========================================
+
+
+vim security.tf
+
+resource "aws_security_group" "mysg" {
+  name        = "Terraform_SG"
+  description = "this is created by terraform"
+
+  ingress {
+    from_port   = 22
+    to_port     = 22
+[root@TERRAFORM ~]# cat security.tf
+resource "aws_security_group" "mysg" {
+  name        = "Terraform_SG"
+  description = "this is created by terraform"
+
+  ingress {
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cide_blocks = ["0.0.0.0/0"]
+  }
+
+
+  ingress {
+    from_port   = 8080
+    to_port     = 8080
+    protocol    = "tcp"
+    cide_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+}
+
+:wq
+
+Terraform code to create Security Groups
+===========================================
+
+vim main.tf
+
+resource "aws_instance" "devops" {
+  tags = {
+    Name = "My-Instance"
+  }
+
+  ami               = "ami-01b14b7ad41e17ba4"
+  instance_type     = "t3.micro"
+  key_name          = "Anjeneyakeypair"
+  availability_zone = "us-east-1a"
+  vpc_security_group_ids = [aws_security_group.mysg.id] -----------------> extra line we added
+  root_block_device {
+    volume_size = 10
+  }
+}
+
+:wq
+
+
+
+
+
+TASK 
+========
+
+first we need 2 ec2-instance, one ec2-instance will be present in North-varginia and another will be Mumbai these two will be in aws cloud provider 
+one region will be North-varginia and another will be Mumbai
+we need 2 provider sections here, 2 resources 
+
+TASK TO DO STEP BY STEP
+=============================
+
+Got it 👍 — this is a classic multi-region Terraform task. I’ll guide you in a very simple, step-by-step way so you can do it confidently.
+
+We will create:
+
+1 EC2 in US East (N. Virginia)
+1 EC2 in Mumbai
+✅ STEP 1: Create project folder
+mkdir terraform-multi-region
+cd terraform-multi-region
+
+✅ STEP 2: Create Terraform file
+
+vi main.tf
+
+✅ STEP 3: Add complete Terraform code
+
+provider "aws" {
+  alias  = "virginia"
+  region = "us-east-1"
+}
+
+provider "aws" {
+  alias  = "mumbai"
+  region = "ap-south-1"
+}
+
+# EC2 in Virginia
+resource "aws_instance" "virginia_instance" {
+  provider = aws.virginia
+
+  ami           = "ami-0c02fb55956c7d316" # Amazon Linux (Virginia)
+  instance_type = "t2.micro"
+
+  tags = {
+    Name = "Virginia-Instance"
+  }
+}
+
+# EC2 in Mumbai
+resource "aws_instance" "mumbai_instance" {
+  provider = aws.mumbai
+
+  ami           = "ami-03f4878755434977f" # Amazon Linux (Mumbai)
+  instance_type = "t2.micro"
+
+  tags = {
+    Name = "Mumbai-Instance"
+  }
+}
+
+✅ STEP 4: Initialize Terraform
+
+terraform init
+
+✅ STEP 5: Check plan
+
+terraform plan
+
+✅ STEP 6: Apply
+
+terraform apply
+
+✅ STEP 7: Verify in AWS Console
+
+Go to:
+
+EC2 → Check region N. Virginia
+Switch region → Mumbai
+
+👉 You will see 2 instances created
+
+IMPORTANT NOTES (VERY IMPORTANT)
+1. AMI is region-specific
+Each region has different AMI IDs
+If error comes → AMI might be outdated
+
+2. AWS credentials must be configured
+
+Run:
+
+aws configure
+
+Enter:
+
+Access Key
+Secret Key
+Region (any default)
+
+3. Free tier safe
+
+Use:
+
+t2.micro
+
+======================================================================================================================================================================================================================
+
+now we will do write terrafom file for this
+
+[root@TERRAFORM ~]# ll
+total 28
+-rw-r--r--. 1 root root  355 Apr  6 09:08 main.tf
+-rw-r--r--. 1 root root   42 Apr  6 09:14 provider.tf
+-rw-r--r--. 1 root root  581 Apr  6 09:14 security.tf
+-rw-r--r--. 1 root root  181 Apr  6 09:21 terraform.tfstate
+-rw-r--r--. 1 root root 8371 Apr  6 09:21 terraform.tfstate.backup
+[root@TERRAFORM ~]# rm -rf provider.tf 
+[root@TERRAFORM ~]# rm -rf security.tf 
+[root@TERRAFORM ~]# ll
+total 20
+[root@TERRAFORM ~]# vim main.tf
+[root@TERRAFORM ~]# 
+
+[root@TERRAFORM ~]# cat main.tf
+provider "aws" {
+  region = "us-east-1"
+}
+
+provider "aws" {
+  region = "ap-south-1"
+}
+
+
+resource "aws_instance" "devops" {
+  tags = {
+    Name = "NV-Instance"
+  }
+
+  ami                    = "ami-01b14b7ad41e17ba4"
+  instance_type          = "t3.micro"
+  key_name               = "Anjeneyakeypair"
+  availability_zone      = "us-east-1a"
+  root_block_device {
+    volume_size = 10
+  }
+}
+
+
+resource "aws_instance" "devops" {
+  tags = {
+    Name = "Mumbai-Instance"
+  }
+
+  ami                    = "ami-045443a70fafb8bbc"
+  instance_type          = "t3.micro"
+  availability_zone      = "ap-south-1a"
+  root_block_device {
+    volume_size = 10
+  }
+}
+
+:wq
+
+[root@TERRAFORM ~]#
+
+Now one error will come what the error is terraform will take 1st provider 
+for that we will use alias concept here
+
+
+
+
+[root@TERRAFORM ~]# vim main.tf
+[root@TERRAFORM ~]# cat main.tf
+provider "aws" {
+  region = "us-east-1"
+}
+
+provider "aws" {
+  region = "ap-south-1"
+}
+
+
+[root@TERRAFORM ~]# vim main.tf
+[root@TERRAFORM ~]# cat main.tf
+provider "aws" {
+  region = "us-east-1"
+  alias = "usa"
+}
+
+provider "aws" {
+  region = "ap-south-1"
+  alias = "mumbai"
+}
+
+
+resource "aws_instance" "devops" {
+  tags = {
+    Name = "NV-Instance"
+  }
+  provider = "aws.usa"
+  ami                    = "ami-id-in-usa"
+  instance_type          = "t3.micro"
+  key_name               = "Anjeneyakeypair"
+  availability_zone      = "us-east-1a"
+  root_block_device {
+    volume_size = 10
+  }
+}
+
+
+resource "aws_instance" "devops" {
+  tags = {
+    Name = "Mumbai-Instance"
+  }
+  provider = "aws.mumbai"
+  ami                    = "ami-id-mumbai"
+  instance_type          = "t3.micro"
+  availability_zone      = "ap-south-1a"
+  root_block_device {
+    volume_size = 10
+  }
+}
+[root@TERRAFORM ~]# 
+
+
+[root@TERRAFORM ~]# terraform init
+[root@TERRAFORM ~]# terraform plan 
+[root@TERRAFORM ~]# terraform apply
+
+as per the latest update we will do some changes here
+
+
+vim main.tf
+
+provider "aws" {
+  region = "us-east-1"
+  alias = "usa"
+}
+
+provider "aws" {
+  region = "ap-south-1"
+  alias = "mumbai"
+}
+
+
+resource "aws_instance" "devops" {
+  tags = {
+    Name = "NV-Instance"
+  }
+  provider = aws.usa
+  ami                    = "ami-id-in-usa"
+  instance_type          = "t3.micro"
+  key_name               = "Anjeneyakeypair"
+  availability_zone      = "us-east-1a"
+  root_block_device {
+    volume_size = 10
+  }
+}
+
+
+resource "aws_instance" "cloudaws" {
+  tags = {
+    Name = Mumbai-Instance
+  }
+  provider = "aws.mumbai"
+  ami                    = "ami-id-mumbai"
+  instance_type          = "t3.micro"
+  availability_zone      = "ap-south-1a"
+  root_block_device {
+    volume_size = 10
+  }
+}
+
+
+:wq 
+
+this will get executed 
+
+
+[root@TERRAFORM ~]# terraform init
+[root@TERRAFORM ~]# terraform plan 
+[root@TERRAFORM ~]# terraform apply --auto-approve
+
+[root@TERRAFORM ~]# terraform state list
+
+[root@TERRAFORM ~]# terraform destroy --auto-approve
+
+
+
+Next Topic: PROVIDERS in next class
+
+
+
+
+
+
+
+
+4. ================================
+
+
+
+vim provider.tf
+
+
+provider "aws" {
+region = "us-east-1"
+}
+
+:wq
+
+
+vim resources.tf
+
+resource "aws_instance" "myinstance" {
+tags = {
+Name = "MyServer"
+}
+ami = "ami-01b14b7ad41e17ba4"
+instance_type = "t3.micro"
+key_name = "Jaisreeramakeypair"
+availability_zone = "us-east-1a"
+root_block_device {
+volume_size = 10
+}
+}
+
+:wq
+
+
+
+vim resource.tf
+
+locals {
+  itype = {
+    dev = "t3.micro"
+    test = "c7i-flex.large"
+    prod = "m7i-flex.large"
+  }
+} 
+
+resource "aws_instance" "myinstance" {
+  tags = {
+    Name = "${terraform.workspace}-MyServer"
+  }
+  ami               = "ami-01b14b7ad41e17ba4"
+  instance_type     = local.itype[terraform.workspace]
+  key_name          = "Anjeneyakeypair"
+  availability_zone = "us-east-1a"
+  root_block_device {
+    volume_size = 10
+  }
+}
+
+:wq
+
+
+
+vim resource.tf
+
+locals {
+  itype = {
+    dev = "t3.micro"
+    test = "c7i-flex.large"
+    prod = "m7i-flex.large"
+  }
+}
+
+resource "aws_instance" "myinstance" {
+  tags = {
+    Name = "${terraform.workspace}-MyServer"
+  }
+  ami               = "ami-01b14b7ad41e17ba4"
+  instance_type     = local.itype[terraform.workspace]
+  key_name          = "Anjeneyakeypair"
+  availability_zone = "us-east-1a"
+  count = 2
+  root_block_device {
+    volume_size = 10
+  }
+}
+
+:wq
+
+
+
+
 
 
 
